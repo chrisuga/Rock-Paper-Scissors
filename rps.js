@@ -1,6 +1,6 @@
 let humanScore = 0;
 let robotScore = 0;
-let currentlyPlaying = true;
+let roundCount = 0;
 
 function robotPlay() {
   let robotsHand = Math.floor(Math.random()*3);
@@ -60,32 +60,34 @@ function keepScore(string) {
   if (string == 'You win!') {
     humanScore++;
     if (humanScore >= 5){
-      currentlyPlaying = false;
       return 'Supreme victory!' + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
     }
-    return string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
+    return console.log(string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore);
   } else if (string == 'You lose... that\'s kinda cringe') {
     robotScore++;
     if (robotScore >= 5){
-      currentlyPlaying = false;
       return 'Mortifying failure!' + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
     }
-    return string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
+    return console.log(string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore);
   } else if (string == 'Tie') {
-    return string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
+    return console.log(string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore);
   }
 }
 
 function playGame() {
-  currentlyPlaying = true;
-  humanScore = 0;
-  robotScore = 0;
-  do {
-    console.log(compareHands());
-  } while (currentlyPlaying)
+  for (let i = 0; i < 5; i++) {
+    compareHands();
+  }
+  if (humanScore > robotScore) {
+    return console.log("Supreme victory!");
+  } else if (humanScore < robotScore) {
+    return console.log("Mortifying failure...");
+  } else if (humanScore == robotScore) {
+    return console.log("We are human... after all.");
+  }
 }
 
-playGame()
+playGame();
 
 /*
 
