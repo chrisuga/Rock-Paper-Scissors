@@ -26,9 +26,9 @@ function humanPlay() {
   }
 }
 
-function compareHands() {
+function compareHands(buttonId) {
   robotsHand = robotPlay();
-  humanHand = humanPlay();
+  humanHand = buttonId;
   if (robotsHand == 'Rock') {
     if (humanHand == 'Rock') {
       return keepScore('Tie');
@@ -60,24 +60,27 @@ function keepScore(string) {
   if (string == 'You win!') {
     humanScore++;
     if (humanScore >= 5){
+      scoreDisplay.textContent = 'Human Score: ' + humanScore + '\tSupreme victory!' + '\nRobot Score: ' + robotScore + '\tMortifying failure...';
       return 'Supreme victory!' + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
     }
+    scoreDisplay.textContent = 'Human Score: ' + humanScore + '\nRobot Score: ' + robotScore;
     return console.log(string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore);
   } else if (string == 'You lose... that\'s kinda cringe') {
     robotScore++;
     if (robotScore >= 5){
+      scoreDisplay.textContent = 'Human Score: ' + humanScore + '\tMortifying failure...' + '\nRobot Score: ' + robotScore + '\tSupreme victory!';
       return 'Mortifying failure!' + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore;
     }
+    scoreDisplay.textContent = 'Human Score: ' + humanScore + '\nRobot Score: ' + robotScore;
     return console.log(string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore);
   } else if (string == 'Tie') {
     return console.log(string + '\nHuman score: ' + humanScore + '\nrobotScore: ' + robotScore);
   }
 }
 
-function playGame() {
-  for (let i = 0; i < 5; i++) {
-    compareHands();
-  }
+function playGame(buttonId) {
+  compareHands(buttonId);
+
   if (humanScore > robotScore) {
     return console.log("Supreme victory!");
   } else if (humanScore < robotScore) {
@@ -87,7 +90,18 @@ function playGame() {
   }
 }
 
-playGame();
+const scoreboard = document.querySelector('#scoreboard');
+
+const scoreDisplay = document.createElement('p');
+scoreDisplay.textContent = 'Human Score: ' + humanScore + '\nRobot Score: ' + robotScore;
+scoreboard.appendChild(scoreDisplay);
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playGame(button.id);
+  });
+});
 
 /*
 
